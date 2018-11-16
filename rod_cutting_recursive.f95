@@ -1,3 +1,7 @@
+! This program implements the problem of calculating the best way of cutting a rod of length N when each piece of different 
+! length can be sold for a different amount.
+! This is the recursive version.
+
 program RodCutting
     implicit none
 

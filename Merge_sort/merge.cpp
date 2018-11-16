@@ -1,3 +1,5 @@
+// This function merges two arrays of integers and runs in O(N) time
+
 #include <vector>
 #include "merge.h"
 
