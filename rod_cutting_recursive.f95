@@ -4,7 +4,8 @@ program RodCutting
     integer :: rod_length, profit
     integer, allocatable, dimension(:) :: prices
 
-    prices = (/ 1, 5, 8, 9, 10, 17, 17, 20 /)
+    ! prices = (/ 1, 5, 8, 9, 10, 17, 17, 20 /)
+    prices = (/ 3, 5, 8, 9, 10, 17, 17, 20 /)
     rod_length = 8
 
     profit = calculate_profit(rod_length, prices)
