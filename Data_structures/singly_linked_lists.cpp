@@ -50,6 +50,64 @@ class linked_list
                 std::cout << n -> element << "\n";
                 n = n -> next;
             }
+            std::cout << "\n";
+        }
+
+        // Adding a node at the beginning
+        void add_node_front(int new_element)
+        {
+            Node *tmp = new Node;
+
+            tmp -> element = new_element;
+            tmp -> next = head;
+
+            head = tmp;
+
+        }
+
+        // Adding a node at a certain position
+        void add_node_position(int new_element, int position)
+        {
+            // Creating a new node and assigning the value of the element
+            Node *new_node = new Node;
+            new_node -> element = new_element;
+            Node *tmp = head;
+
+            // Moving to the right position
+            for (int i = 0; i < position-2; i++)
+            {
+                tmp = tmp->next;
+            }
+
+            // Updating the pointers
+            new_node -> next = tmp->next;
+            tmp -> next = new_node;
+        }
+
+        // Adding a node at the end
+        void add_node_end(int new_element)
+        {
+            Node *tmp = new Node;
+            tmp -> element = new_element;
+
+            tail -> next = tmp;
+            tail = tmp;
+        }
+
+        // Deleting the first element that is equal to a key
+        void remove_element(int key)
+        {
+            Node *current_node = head;
+            Node *previous_node = new Node;
+
+            while(current_node->next != NULL and current_node->element != key)
+            {
+                previous_node = current_node;
+                current_node = current_node -> next;
+            }
+
+            previous_node -> next = current_node -> next;
+            delete current_node;
         }
 };
 
@@ -59,8 +117,18 @@ int main()
     a.add_node(1);
     a.add_node(2);
     a.add_node(4);
-
     a.print_list();
+    
+    a.add_node_position(3, 3);
+    a.print_list();
+
+    a.add_node_end(5);
+    a.add_node_end(6);
+    a.print_list();
+
+    a.remove_element(5);
+    a.print_list();
+
 
     return 0;
 }
