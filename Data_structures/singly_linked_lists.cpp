@@ -21,7 +21,7 @@ class linked_list
             tail = NULL;
         }
 
-        void add_node(int an_element)
+        void add_node_end(int an_element)
         {
             Node *tmp = new Node;   // tmp is a pointer to a new Node
             tmp -> element = an_element;    // the element of the new node is now "an_element"
@@ -34,9 +34,8 @@ class linked_list
             }
             else
             {
-                tail -> next = tmp;     // Now the last node points to the new node
+                tail -> next = tmp;     // The currently last node needs to point to tmp
                 tail = tmp;             // The new node becomes the last node
-
             }
         }
 
@@ -54,7 +53,7 @@ class linked_list
         }
 
         // Adding a node at the beginning
-        void add_node_front(int new_element)
+        void add_node_beginning(int new_element)
         {
             Node *tmp = new Node;
 
@@ -84,16 +83,6 @@ class linked_list
             tmp -> next = new_node;
         }
 
-        // Adding a node at the end
-        void add_node_end(int new_element)
-        {
-            Node *tmp = new Node;
-            tmp -> element = new_element;
-
-            tail -> next = tmp;
-            tail = tmp;
-        }
-
         // Deleting the first element that is equal to a key
         void remove_element(int key)
         {
@@ -106,29 +95,105 @@ class linked_list
                 current_node = current_node -> next;
             }
 
-            previous_node -> next = current_node -> next;
-            delete current_node;
+            if (current_node == head)
+            {
+                head = current_node -> next;
+                delete current_node;
+            }
+            else
+            {
+                previous_node -> next = current_node -> next;
+                delete current_node;
+            }
+            
+        }
+
+        // Remove the node at a certain index
+        void remove_node(int position)
+        {
+            Node *tmp_head = head;
+
+            if (position != 0)
+            {   
+                head = head -> next;
+                position--;
+                remove_node(position);
+            }
+            else
+            {
+                Node *next_node = head -> next;
+
+                head -> element = next_node -> element;
+                head -> next = next_node -> next;
+
+                delete(next_node); 
+            }
+
+            // resetting the head
+            head = tmp_head;
+        }
+
+        // Deleting completely a linked list
+        void delete_all()
+        {
+            Node *tmp = head;
+
+            while(tmp -> next != NULL)
+            {
+                head = tmp -> next;
+                free(tmp);
+                tmp = head;
+            }
+
+            free(head);
+            head = NULL;
+        }
+
+        int get_element(int position)
+        {
+            Node *current_node = head;
+
+            for (int i=0; i < position; i++)
+            {
+                current_node = current_node -> next;
+                if ( current_node -> next == NULL)
+                {
+                    std::cout << "List length shorter than index asked\n";
+                    return 0;
+                }
+            }
+
+            return current_node -> element;
+
         }
 };
 
 int main()
 {
     linked_list a;
-    a.add_node(1);
-    a.add_node(2);
-    a.add_node(4);
-    a.print_list();
+    a.add_node_end(1);
+    a.add_node_end(2);
+    a.add_node_end(4);
+    // a.print_list();
     
     a.add_node_position(3, 3);
-    a.print_list();
+    // a.print_list();
 
     a.add_node_end(5);
     a.add_node_end(6);
     a.print_list();
 
-    a.remove_element(5);
+    // std::cout << "The element at index 4 is:\n";
+    // std::cout << a.get_element(4) << "\n\n";
+
+    a.remove_node(3);
     a.print_list();
 
+    // a.remove_element(4);
+    // a.print_list();
+    
+    // a.delete_all();
+    // a.print_list();
 
     return 0;
 }
